@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>resQvoice</title>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- SCREEN 1: LOGIN & WELCOME -->
+        <section id="login-screen" class="screen active">
+            <div class="login-header">
+                <h1 class="logo-text">resQvoice</h1>
+                <p class="tagline">Safety, Voices. Empowerment.</p>
+            </div>
+            
+            <div class="login-avatar">
+                <div class="avatar-placeholder big"><i class="fa-solid fa-user"></i></div>
+            </div>
+
+            <div class="login-form">
+                <h2>Sign In</h2>
+
+                <form id="loginForm">
+                    <div class="input-group">
+                        <input type="email" id="email" placeholder="Email" required>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Sign In</button>
+                </form>
+
+                <a href="#" class="skip-link" id="showSignupLink">Create new account</a>
+                <a href="#" class="skip-link" onclick="navigateTo('home-screen')">Skip to Setup</a>
+            </div>
+
+            <div class="signup-form" id="signup-screen" style="display: none;">
+                <h2>Create Account</h2>
+
+                <form id="signupForm">
+                    <div class="input-group">
+                        <input type="text" id="signupName" placeholder="Name" required>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="email" id="signupEmail" placeholder="Email" required>
+                    </div>
+
+                    <div class="input-group">
+                        <input type="password" id="signupPassword" placeholder="Password" required>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Sign Up</button>
+                </form>
+
+                <a href="#" class="skip-link" id="showLoginLink">Already have an account? Sign In</a>
+            </div>
+
+            <div class="login-illustration">
+                <!-- Using FontAwesome for placeholder illustration context -->
+                <i class="fa-solid fa-person-dress fa-4x text-teal"></i>
+            </div>
+        </section>
+
+        <!-- SCREEN 2: HOME DASHBOARD -->
+        <section id="home-screen" class="screen">
+            <header class="home-header">
+                <div class="greeting">
+                    <h2 id="userGreeting">Hi!</h2>
+                    <p><i class="fa-regular fa-bell"></i> Emergency Notification</p>
+                </div>
+                <img id="userAvatar" src="https://ui-avatars.com/api/?name=User&background=random" alt="User" class="avatar-small">
+            </header>
+
+            <div class="sos-trigger-area">
+                <button class="btn-sos-main" onclick="navigateTo('sos-alert-screen')">
+                    <span class="sos-text">SOS NOW</span>
+                    <span class="sos-subtext">Hold to activate, Shake for 30s</span>
+                </button>
+            </div>
+
+            <h3 class="section-title">Bento Grid</h3>
+            <div class="bento-grid">
+                <div class="bento-item ai-monitor" onclick="navigateTo('ai-voice-screen')">
+                    <h4>AI Active Monitor</h4>
+                    <div class="soundwave-icon">
+                        <i class="fa-solid fa-wave-square"></i>
+                    </div>
+                </div>
+                
+                <div class="bento-item status-monitor">
+                    <h4>Status Monitoring:</h4>
+                    <p>Scream/Shout<br>Time Analysis</p>
+                </div>
+
+                <div class="bento-item journey-timer">
+                    <div class="timer-info">
+                        <h4>Journey Timer</h4>
+                        <p>Input Destination<br><strong>Campus Library</strong></p>
+                    </div>
+                    <div class="timer-action">
+                        <p class="duration">Set Duration<br><strong>15 min</strong></p>
+                        <button class="btn-teal-small" onclick="navigateTo('journey-timer-screen')">Start Timer Walk</button>
+                    </div>
+                </div>
+
+                <div class="bento-item trusted-contacts">
+                    <h4>Trusted Contacts</h4>
+                    <div class="contact-list-mini">
+                        <div class="contact-mini"><img src="https://ui-avatars.com/api/?name=Mom&background=random" alt="Mom"><span>Mom</span></div>
+                        <div class="contact-mini"><img src="https://ui-avatars.com/api/?name=Alex&background=random" alt="Alex"><span>Alex</span></div>
+                        <div class="contact-mini add" onclick="navigateTo('trusted-contacts-screen')"><i class="fa-solid fa-plus"></i><span>Add</span></div>
+                    </div>
+                </div>
+
+                <div class="bento-item history">
+                    <h4>History</h4>
+                    <div class="history-icon"><i class="fa-solid fa-clock-rotate-left"></i><span>Add</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 3: AI VOICE & SIREN SETUP -->
+        <section id="ai-voice-screen" class="screen">
+            <header class="sub-header">
+                <button class="back-btn" onclick="navigateTo('home-screen')"><i class="fa-solid fa-chevron-left"></i></button>
+                <h2>AI Voice Controls</h2>
+                <div class="spacer"></div>
+            </header>
+
+            <div class="settings-list">
+                <div class="setting-item toggle-item highlight-bg">
+                    <div class="setting-text">
+                        <h4>AI Voice Listening</h4>
+                        <p>(Always On)</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <h3 class="list-title">Detection Settings</h3>
+                <div class="setting-item toggle-item list-bg">
+                    <h4>Scream/Shout Recognition</h4>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="setting-item toggle-item list-bg">
+                    <h4>Panic Tone Detection</h4>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="setting-item list-bg">
+                    <h4>Custom Safeword</h4>
+                    <input type="text" value="Aurora" class="safeword-input">
+                </div>
+
+                <div class="setting-item toggle-item highlight-bg mt-4">
+                    <div class="setting-text">
+                        <h4>Silent SOS Mode</h4>
+                        <p>Discreet notification</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <div class="setting-item highlight-bg mt-2 clickable">
+                    <h4>Test Voice Trigger</h4>
+                    <i class="fa-solid fa-chevron-right text-gray"></i>
+                </div>
+            </div>
+
+            <div class="soundwave-large">
+                <i class="fa-solid fa-chart-bar fa-3x"></i>
+                <i class="fa-solid fa-chart-bar fa-4x text-red"></i>
+                <i class="fa-solid fa-chart-bar fa-3x"></i>
+                <i class="fa-solid fa-chart-bar fa-2x"></i>
+            </div>
+        </section>
+
+        <!-- SCREEN 4: JOURNEY TIMER CONFIG -->
+        <section id="journey-timer-screen" class="screen">
+            <header class="sub-header">
+                <button class="back-btn" onclick="navigateTo('home-screen')"><i class="fa-solid fa-chevron-left"></i></button>
+                <h2>Safe Path Timer</h2>
+                <div class="spacer"></div>
+            </header>
+
+            <div class="journey-content">
+                <div class="input-with-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <input type="text" placeholder="Set Destination" value="Campus Library">
+                </div>
+
+                <div class="map-placeholder mt-2">
+                    <!-- Fake map route -->
+                    <div class="map-route"></div>
+                    <div class="eta-badge">ETA 12 mins</div>
+                </div>
+
+                <div class="duration-slider mt-4">
+                    <div class="slider-header">
+                        <h4>Set duration</h4>
+                        <span>15 min</span>
+                    </div>
+                    <input type="range" min="1" max="60" value="15" class="range-slider">
+                </div>
+
+                <div class="settings-list mt-4">
+                    <div class="setting-item toggle-item">
+                        <div class="setting-text">
+                            <h4>Auto-SOS on Timer Expiry</h4>
+                            <p>Shares location, Notifies Guardians</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item toggle-item mt-2 border-top-light pt-3">
+                        <h4>Checkpoint Check-In</h4>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <button class="btn-primary mt-auto" onclick="navigateTo('home-screen')">Start Secure Journey</button>
+            </div>
+        </section>
+
+        <!-- SCREEN 5: SOS ALERT ACTIVE -->
+        <section id="sos-alert-screen" class="screen sos-mode">
+            <div class="sos-content">
+                <h3 class="sos-top-text">ALERT ACTIVATED</h3>
+                
+                <div class="pulse-icon">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+
+                <div class="sos-status-title">
+                    <h2>EMERGENCY TRIGGERED</h2>
+                    <p>(AI Scream Detected)</p>
+                </div>
+
+                <div class="sos-map-snippet">
+                    <span class="location-label">Campus Main St, CA</span>
+                    <div class="map-marker"><i class="fa-solid fa-location-crosshairs"></i></div>
+                </div>
+
+                <div class="sos-status-list">
+                    <div class="status-item">
+                        <span><i class="fa-solid fa-circle text-green" style="font-size:8px;"></i> Sending Location</span>
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <div class="status-item">
+                        <span><i class="fa-solid fa-paper-plane text-red"></i> Mom, Alex notified</span>
+                        <span>2th</span>
+                    </div>
+                    <div class="status-item">
+                        <span><i class="fa-solid fa-microphone text-red"></i> Black Box Audio</span>
+                        <span>Active</span>
+                    </div>
+                </div>
+
+                <div class="sos-actions">
+                    <button class="btn-safe" onclick="navigateTo('home-screen')">I'M SAFE NOW</button>
+                    <button class="btn-operator">SPEAK OPERATOR</button>
+                </div>
+                
+                <p class="flashing-text">Status updates flashing.</p>
+            </div>
+        </section>
+
+        <!-- SCREEN 6: TRUSTED CONTACTS -->
+        <section id="trusted-contacts-screen" class="screen pb-nav">
+            <header class="sub-header">
+                <button class="back-btn" onclick="navigateTo('home-screen')"><i class="fa-solid fa-chevron-left"></i></button>
+                <h2>Trusted Contacts</h2>
+                <div class="spacer"></div>
+            </header>
+
+            <div class="contacts-list">
+                <div class="contact-card">
+                    <img src="https://ui-avatars.com/api/?name=Mom&background=random" alt="Mom" class="contact-avatar">
+                    <div class="contact-info">
+                        <h4>Mom</h4>
+                    </div>
+                    <div class="contact-actions">
+                        <button class="action-btn">Call</button>
+                        <button class="action-btn">Message</button>
+                    </div>
+                </div>
+
+                <div class="contact-card expanded">
+                    <div class="card-top">
+                        <img src="https://ui-avatars.com/api/?name=Papa&background=random" alt="Papa" class="contact-avatar">
+                        <div class="contact-info">
+                            <h4>Papa</h4>
+                        </div>
+                        <div class="contact-actions">
+                            <button class="action-btn">Call</button>
+                            <button class="action-btn">Message</button>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <p><i class="fa-solid fa-location-dot"></i> View Location History</p>
+                    </div>
+                </div>
+
+                <div class="contact-card expanded">
+                    <div class="card-top">
+                        <img src="https://ui-avatars.com/api/?name=Brother&background=random" alt="Brother" class="contact-avatar">
+                        <div class="contact-info">
+                            <h4>Brother</h4>
+                        </div>
+                        <div class="contact-actions">
+                            <button class="action-btn">Call</button>
+                            <button class="action-btn">Message</button>
+                        </div>
+                    </div>
+                    <div class="card-bottom">
+                        <p><i class="fa-solid fa-location-dot"></i> View Location History</p>
+                    </div>
+                </div>
+
+                <button class="btn-secondary-green my-3">Add Contact</button>
+
+                <div class="contact-card">
+                    <img src="https://ui-avatars.com/api/?name=Friend1&background=random" alt="Friend1" class="contact-avatar">
+                    <div class="contact-info">
+                        <h4>Friend1</h4>
+                    </div>
+                    <div class="contact-actions">
+                        <button class="action-btn">Call</button>
+                        <button class="action-btn">Message</button>
+                    </div>
+                </div>
+
+                <div class="contact-card">
+                    <img src="https://ui-avatars.com/api/?name=Lily&background=random" alt="Lily" class="contact-avatar">
+                    <div class="contact-info">
+                        <h4>Lily</h4>
+                    </div>
+                    <div class="contact-actions">
+                        <button class="action-btn">Call</button>
+                        <button class="action-btn">Message</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 7: MAP SCREEN -->
+        <section id="map-screen" class="screen pb-nav">
+            <header class="sub-header relative-header">
+                <h2>Map</h2>
+            </header>
+            
+            <!-- Tags below header -->
+            <div class="map-tags">
+                <span class="tag active">Safe Points</span>
+                <span class="tag">Guardians</span>
+                <span class="tag">Emergency Sc</span>
+            </div>
+
+            <div class="full-map-area">
+                <div class="map-target-btn"><i class="fa-solid fa-location-crosshairs"></i></div>
+            </div>
+
+            <div class="share-location-sheet">
+                <div class="sheet-header">
+                    <h4>Share Live Location</h4>
+                    <i class="fa-solid fa-tower-broadcast text-red"></i>
+                </div>
+                <p class="sheet-sub">Send to saved contacts:</p>
+                <div class="share-contacts-scroll">
+                    <div class="share-contact">
+                        <img src="https://ui-avatars.com/api/?name=Mom&background=random" alt="Mom">
+                        <span>Mom</span>
+                        <input type="checkbox" checked>
+                    </div>
+                    <div class="share-contact">
+                        <img src="https://ui-avatars.com/api/?name=Papa&background=random" alt="Papa">
+                        <span>Papa</span>
+                        <input type="checkbox" checked>
+                    </div>
+                    <div class="share-contact">
+                        <img src="https://ui-avatars.com/api/?name=Bro&background=random" alt="Brother">
+                        <span>Brother</span>
+                        <input type="checkbox" checked>
+                    </div>
+                    <div class="share-contact">
+                        <img src="https://ui-avatars.com/api/?name=Fr1&background=random" alt="Friend1">
+                        <span>Friend1</span>
+                        <input type="checkbox" checked>
+                    </div>
+                    <div class="share-contact">
+                        <img src="https://ui-avatars.com/api/?name=Lily&background=random" alt="Lily">
+                        <span>Lily</span>
+                        <input type="checkbox">
+                    </div>
+                </div>
+                <div class="sheet-actions">
+                    <div class="status-indicator">Live Location Sharing</div>
+                    <button class="btn-primary-small">Start Live Sharing</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 8: SETTINGS SCREEN -->
+        <section id="settings-screen" class="screen pb-nav">
+            <header class="sub-header">
+                <button class="back-btn" onclick="navigateTo('home-screen')"><i class="fa-solid fa-chevron-left"></i></button>
+                <h2>App Settings</h2>
+                <div class="spacer"></div>
+            </header>
+
+            <div class="settings-list-full">
+                <h3 class="section-heading">Account</h3>
+                <div class="settings-menu-item">
+                    <i class="fa-regular fa-user"></i> <span>Profile</span>
+                </div>
+                <div class="settings-menu-item">
+                    <i class="fa-solid fa-lock"></i> <span>Password</span>
+                </div>
+
+                <h3 class="section-heading">Security</h3>
+                <div class="settings-menu-item toggle-row">
+                    <div><i class="fa-solid fa-microphone-lines"></i> <span>Voice Biometrics</span></div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="settings-menu-item" onclick="navigateTo('journey-timer-screen')">
+                    <i class="fa-solid fa-route"></i> <span>Safe Path Timer Config</span>
+                </div>
+
+                <h3 class="section-heading">Notifications</h3>
+                <div class="settings-menu-item toggle-row">
+                    <div><i class="fa-regular fa-bell"></i> <span>Contact Alerts</span></div>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <div class="settings-menu-item toggle-row">
+                    <div><i class="fa-solid fa-paper-plane"></i> <span>Test Mode</span></div>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+                <h3 class="section-heading">AI Calibration</h3>
+                <div class="settings-menu-item" onclick="navigateTo('ai-voice-screen')">
+                    <i class="fa-solid fa-sliders"></i> <span>Detection Sensitivity</span>
+                </div>
+
+                <h3 class="section-heading">About</h3>
+                <div class="settings-menu-item">
+                    <i class="fa-solid fa-circle-info"></i> <span>Version & Legal</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOTTOM NAVIGATION (Hidden on Login and SOS) -->
+        <nav id="bottom-nav" class="bottom-nav hidden">
+            <button class="nav-item active" onclick="navigateNav('home-screen', this)">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </button>
+            <button class="nav-item" onclick="navigateNav('map-screen', this)">
+                <i class="fa-solid fa-map"></i>
+                <span>Map</span>
+            </button>
+            <button class="nav-item" onclick="navigateNav('trusted-contacts-screen', this)">
+                <i class="fa-solid fa-user-group"></i>
+                <span>Contacts</span>
+            </button>
+            <button class="nav-item" onclick="navigateNav('settings-screen', this)">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </button>
+        </nav>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
