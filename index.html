@@ -12,64 +12,94 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- SCREEN 1: LOGIN & WELCOME -->
-        <section id="login-screen" class="screen active">
-            <div class="login-header">
-                <h1 class="logo-text">resQvoice</h1>
-                <p class="tagline">Safety, Voices. Empowerment.</p>
-            </div>
-            
-            <div class="login-avatar">
-                <div class="avatar-placeholder big"><i class="fa-solid fa-user"></i></div>
-            </div>
+     <!-- SCREEN 1: LOGIN & WELCOME -->
+<section id="login-screen" class="screen active">
+    <div class="login-header">
+        <h1 class="logo-text">resQvoice</h1>
+        <p class="tagline">Safety, Voices. Empowerment.</p>
+    </div>
+    
+    <div class="login-avatar">
+        <div class="avatar-placeholder big"><i class="fa-solid fa-user"></i></div>
+    </div>
 
-            <div class="login-form">
-                <h2>Sign In</h2>
+    <div class="login-form">
+        <h2>Sign In</h2>
 
-                <form id="loginForm">
-                    <div class="input-group">
-                        <input type="email" id="email" placeholder="Email" required>
-                    </div>
-
-                    <div class="input-group">
-                        <input type="password" id="password" placeholder="Password" required>
-                    </div>
-
-                    <button type="submit" class="btn-primary">Sign In</button>
-                </form>
-
-                <a href="#" class="skip-link" id="showSignupLink">Create new account</a>
-                <a href="#" class="skip-link" onclick="navigateTo('home-screen')">Skip to Setup</a>
+        <form id="loginForm">
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email" required>
             </div>
 
-            <div class="signup-form" id="signup-screen" style="display: none;">
-                <h2>Create Account</h2>
-
-                <form id="signupForm">
-                    <div class="input-group">
-                        <input type="text" id="signupName" placeholder="Name" required>
-                    </div>
-
-                    <div class="input-group">
-                        <input type="email" id="signupEmail" placeholder="Email" required>
-                    </div>
-
-                    <div class="input-group">
-                        <input type="password" id="signupPassword" placeholder="Password" required>
-                    </div>
-
-                    <button type="submit" class="btn-primary">Sign Up</button>
-                </form>
-
-                <a href="#" class="skip-link" id="showLoginLink">Already have an account? Sign In</a>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Password" required>
             </div>
 
-            <div class="login-illustration">
-                <!-- Using FontAwesome for placeholder illustration context -->
-                <i class="fa-solid fa-person-dress fa-4x text-teal"></i>
-            </div>
-        </section>
+            <button type="submit" class="btn-primary">Sign In</button>
+        </form>
 
+        <a href="#" class="skip-link" id="showForgotLink">Forgot Password?</a>
+        <a href="#" class="skip-link" id="showSignupLink">Create new account</a>
+        <a href="#" class="skip-link" onclick="navigateTo('home-screen')">Skip to Setup</a>
+    </div>
+
+    <div class="forgot-form" id="forgot-screen" style="display: none;">
+        <h2>Reset Password</h2>
+
+        <form id="sendOtpForm">
+            <div class="input-group">
+                <input type="email" id="forgotEmail" placeholder="Enter registered email" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Send OTP</button>
+        </form>
+
+        <form id="resetPasswordForm" style="display: none; margin-top: 15px;">
+            <div class="input-group">
+                <input type="text" id="resetOtp" placeholder="Enter OTP" required>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="resetNewPassword" placeholder="New Password" required>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="resetConfirmPassword" placeholder="Confirm New Password" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Create New Password</button>
+        </form>
+
+        <a href="#" class="skip-link" id="backToLoginFromForgot">Back to Sign In</a>
+    </div>
+
+    <div class="signup-form" id="signup-screen" style="display: none;">
+        <h2>Create Account</h2>
+
+        <form id="signupForm">
+            <div class="input-group">
+                <input type="text" id="signupName" placeholder="Name" required>
+            </div>
+
+            <div class="input-group">
+                <input type="email" id="signupEmail" placeholder="Email" required>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="signupPassword" placeholder="Password" required>
+            </div>
+
+            <button type="submit" class="btn-primary">Sign Up</button>
+        </form>
+
+        <a href="#" class="skip-link" id="showLoginLink">Already have an account? Sign In</a>
+    </div>
+
+    <div class="login-illustration">
+        <i class="fa-solid fa-person-dress fa-4x text-teal"></i>
+    </div>
+</section>
+   
         <!-- SCREEN 2: HOME DASHBOARD -->
         <section id="home-screen" class="screen">
             <header class="home-header">
@@ -504,3 +534,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+

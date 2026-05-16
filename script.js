@@ -1,5 +1,7 @@
-// API base URL - change this to your backend URL
-const API_BASE_URL = 'https://resqvoice-q67t.onrender.com/api';
+// API base URL - local in VS Code, deployed backend on Netlify.
+const API_BASE_URL = ["localhost", "127.0.0.1"].includes(window.location.hostname)
+  ? "http://localhost:5000/api"
+  : "https://resqvoice-q67t.onrender.com/api";
 
 // Helper function to handle API responses
 const handleResponse = async (response) => {
@@ -76,7 +78,7 @@ const updateUserProfile = (user) => {
   const avatar = document.getElementById("userAvatar");
 
   if (greeting) {
-    greeting.textContent = `Hi, ${user.name}!`;
+    greeting.textContent = `Welcome ${user.name}`;
   }
 
   if (avatar) {
@@ -85,6 +87,7 @@ const updateUserProfile = (user) => {
     avatar.alt = user.name;
   }
 };
+
 
 // UI Helper functions
 const showError = (message) => {
@@ -224,9 +227,13 @@ function updateBottomNavState(screenId) {
 function showSignup() {
   const loginFormBox = document.querySelector(".login-form");
   const signupFormBox = document.getElementById("signup-screen");
+  const forgotFormBox = document.getElementById("forgot-screen");
 
   if (loginFormBox && signupFormBox) {
     loginFormBox.style.display = "none";
+    if (forgotFormBox) {
+      forgotFormBox.style.display = "none";
+    }
     signupFormBox.style.display = "block";
   }
 }
@@ -234,10 +241,14 @@ function showSignup() {
 function showLogin() {
   const loginFormBox = document.querySelector(".login-form");
   const signupFormBox = document.getElementById("signup-screen");
+  const forgotFormBox = document.getElementById("forgot-screen");
 
   if (loginFormBox && signupFormBox) {
-    signupFormBox.style.display = "none";
     loginFormBox.style.display = "block";
+    signupFormBox.style.display = "none";
+    if (forgotFormBox) {
+      forgotFormBox.style.display = "none";
+    }
   }
 }
 
@@ -267,9 +278,96 @@ const handleSignup = async (event) => {
   }
 };
 
-// Initialize app
+// Forgot Password UI
+function showForgot() {
+  const loginFormBox = document.querySelector(".login-form");
+  const signupFormBox = document.getElementById("signup-screen");
+  const forgotFormBox = document.getElementById("forgot-screen");
+
+  if (loginFormBox && signupFormBox && forgotFormBox) {
+    loginFormBox.style.display = "none";
+    signupFormBox.style.display = "none";
+    forgotFormBox.style.display = "block";
+  }
+}
+
+const requestPasswordOtp = async (email) => {
+  const response = await fetch(`${API_BASE_URL}/auth/forgot-password`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  return await handleResponse(response);
+};
+
+const resetPasswordWithOtp = async ({ email, otp, newPassword }) => {
+  const response = await fetch(`${API_BASE_URL}/auth/reset-password`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, otp, newPassword }),
+  });
+
+  return await handleResponse(response);
+};
+
+const handleSendOTP = async (event) => {
+  event.preventDefault();
+
+  const email = document.getElementById("forgotEmail").value;
+
+  if (!email) {
+    alert("Enter email");
+    return;
+  }
+
+  try {
+    const data = await requestPasswordOtp(email);
+    const resetPasswordForm = document.getElementById("resetPasswordForm");
+
+    if (resetPasswordForm) {
+      resetPasswordForm.style.display = "block";
+    }
+
+    alert(data.otp ? `${data.message} OTP: ${data.otp}` : data.message);
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+const handleResetPassword = async (event) => {
+  event.preventDefault();
+
+  const email = document.getElementById("forgotEmail").value;
+  const otp = document.getElementById("resetOtp").value;
+  const newPassword = document.getElementById("resetNewPassword").value;
+  const confirmPassword = document.getElementById("resetConfirmPassword").value;
+
+  if (!email || !otp || !newPassword || !confirmPassword) {
+    alert("Fill all fields");
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
+
+  try {
+    const data = await resetPasswordWithOtp({ email, otp, newPassword });
+    alert(data.message);
+    showLogin();
+  } catch (error) {
+    alert(error.message);
+  }
+};
+
+// MAIN INIT
 document.addEventListener("DOMContentLoaded", () => {
-  // Pre-hide everything except initial login screen
   const screens = document.querySelectorAll(".screen");
   screens.forEach((screen) => {
     if (screen.id !== "login-screen") {
@@ -277,34 +375,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Forms
   const loginForm = document.getElementById("loginForm");
   const signupForm = document.getElementById("signupForm");
-  const showSignupLink = document.getElementById("showSignupLink");
-  const showLoginLink = document.getElementById("showLoginLink");
+  const sendOtpForm = document.getElementById("sendOtpForm");
+  const resetPasswordForm = document.getElementById("resetPasswordForm");
 
-  if (loginForm) {
-    loginForm.addEventListener("submit", handleLogin);
-  }
+  if (loginForm) loginForm.addEventListener("submit", handleLogin);
+  if (signupForm) signupForm.addEventListener("submit", handleSignup);
+  if (sendOtpForm) sendOtpForm.addEventListener("submit", handleSendOTP);
+  if (resetPasswordForm) resetPasswordForm.addEventListener("submit", handleResetPassword);
 
-  if (signupForm) {
-    signupForm.addEventListener("submit", handleSignup);
-  }
+  // Switch forms
+  document.getElementById("showSignupLink")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    showSignup();
+  });
 
-  if (showSignupLink) {
-    showSignupLink.addEventListener("click", (event) => {
-      event.preventDefault();
-      showSignup();
-    });
-  }
+  document.getElementById("showLoginLink")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    showLogin();
+  });
 
-  if (showLoginLink) {
-    showLoginLink.addEventListener("click", (event) => {
-      event.preventDefault();
-      showLogin();
-    });
-  }
+  document.getElementById("showForgotLink")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    showForgot();
+  });
 
-  // Check if user is already logged in
+  document.getElementById("backToLoginFromForgot")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    showLogin();
+  });
+
+  // Auto login
   if (isAuthenticated()) {
     const user = getCurrentUser();
     updateUserProfile(user);

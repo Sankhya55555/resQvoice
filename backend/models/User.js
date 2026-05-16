@@ -17,6 +17,19 @@ const userSchema = new mongoose.Schema(
     type: String,
     required: true,
   },
+
+  resetPasswordOtpHash: {
+    type: String,
+  },
+
+  resetPasswordOtpExpires: {
+    type: Date,
+  },
+
+  resetPasswordOtpAttempts: {
+    type: Number,
+    default: 0,
+  },
 },
 {
   timestamps: true,
