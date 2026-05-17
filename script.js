@@ -78,7 +78,21 @@ const updateUserProfile = (user) => {
   const avatar = document.getElementById("userAvatar");
 
   if (greeting) {
-    greeting.textContent = `Welcome ${user.name}`;
+    const hour = new Date().getHours();
+    let timeGreeting;
+    if (hour < 12) timeGreeting = "Good Morning";
+    else if (hour < 17) timeGreeting = "Good Afternoon";
+    else if (hour < 21) timeGreeting = "Good Evening";
+    else timeGreeting = "Stay Safe Tonight";
+
+    const greetings = [
+      `${timeGreeting}, ${user.name} 👋`,
+      `Hey ${user.name}, stay safe! 💪`,
+      `Welcome back, ${user.name} 🌟`,
+      `Good to see you, ${user.name} 🛡️`,
+    ];
+
+    greeting.textContent = greetings[Math.floor(Math.random() * greetings.length)];
   }
 
   if (avatar) {
